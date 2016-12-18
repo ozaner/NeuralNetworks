@@ -1,77 +1,39 @@
-# Copyright 2015 The TensorFlow Authors. All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# ==============================================================================
-
-"""A very simple MNIST classifier.
-See extensive documentation at
-http://tensorflow.org/tutorials/mnist/beginners/index.md
-"""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-import argparse
-import sys
-
-# Import data
-from tensorflow.examples.tutorials.mnist import input_data
-
+'''
+Following through the MNIST tutorial from TensorFlow's website.
+'''
+#Import Libraries
 import tensorflow as tf
 
-FLAGS = None
+#Import Training, Validation & Testing Data
+from tensorflow.examples.tutorials.mnist import input_data
+mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
+#Create Model
+x = tf.placeholder(tf.float32, [None, 784]) #Placeholder for input (784 is for 28*28 MNIST image data, reduced to 1D)
+W = tf.Variable(tf.zeros([784, 10])) #Variable for Weights, (10 for 10 classes (the digits))
+b = tf.Variable(tf.zeros([10]))#Variable for Biases
 
-def main(_):
-  mnist = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
+y = tf.nn.softmax(tf.matmul(x, W) + b) #Literally y=softmax(Wx+b), how elegant
 
-  # Create the model
-  x = tf.placeholder(tf.float32, [None, 784])
-  W = tf.Variable(tf.zeros([784, 10]))
-  b = tf.Variable(tf.zeros([10]))
-  y = tf.matmul(x, W) + b
+#Define Cost and Optimizer
+y_ = tf.placeholder(tf.float32, [None, 10]) #Placeholder for y' (the one-hot label vectors)
 
-  # Define loss and optimizer
-  y_ = tf.placeholder(tf.float32, [None, 10])
+cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1])) #Cross Entropy Function
+# cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_)) #This one is numerically stable
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy) #Preform gradient descent on the cross_entropy
 
-  # The raw formulation of cross-entropy,
-  #
-  #   tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(tf.nn.softmax(y)),
-  #                                 reduction_indices=[1]))
-  #
-  # can be numerically unstable.
-  #
-  # So here we use tf.nn.softmax_cross_entropy_with_logits on the raw
-  # outputs of 'y', and then average across the batch.
-  cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_))
-  train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+#Init Execution
+init = tf.global_variables_initializer() #Init variables
+sess = tf.Session() #Create new TF session
+sess.run(init) #Run session with initialized variables
 
-  sess = tf.InteractiveSession()
-  # Train
-  tf.global_variables_initializer().run()
-  for _ in range(1000):
+#Run Training
+for i in range(1000):
     batch_xs, batch_ys = mnist.train.next_batch(100)
     sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
-  # Test trained model
-  correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-  accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-  print(sess.run(accuracy, feed_dict={x: mnist.test.images,
-                                      y_: mnist.test.labels}))
+#Evaluation
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1)) #Creates a list of booleans that represent which ones it got right.
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) #Averages correct predictions
 
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('--data_dir', type=str, default='/tmp/tensorflow/mnist/input_data',
-                      help='Directory for storing input data')
-  FLAGS, unparsed = parser.parse_known_args()
-  tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels})) #Print Results
