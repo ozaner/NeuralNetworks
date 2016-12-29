@@ -1,5 +1,5 @@
 '''
-Following through the MNIST tutorial from TensorFlow's website.
+Following through the MNIST beginner tutorial from TensorFlow's website.
 '''
 #Import Libraries
 import tensorflow as tf
@@ -9,31 +9,31 @@ from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 #Create Model
-x = tf.placeholder(tf.float32, [None, 784]) #Placeholder for input (784 is for 28*28 MNIST image data, reduced to 1D)
-W = tf.Variable(tf.zeros([784, 10])) #Variable for Weights, (10 for 10 classes (the digits))
-b = tf.Variable(tf.zeros([10]))#Variable for Biases
+img_dim = 28 #28x28 image
+img_dim_flat = img_dim * img_dim #784 vector of pixel intensities
+num_classes = 10 #10 digits
 
-y = tf.nn.softmax(tf.matmul(x, W) + b) #Literally y=softmax(Wx+b), how elegant
+x = tf.placeholder(tf.float32, shape=[None, img_dim_flat]) #nx784 Matrix (Input)
+W = tf.Variable(tf.zeros([img_dim_flat,num_classes])) #784x10 Matrix (Weights)
+b = tf.Variable(tf.zeros([num_classes])) #10 long Vector (Biases)
 
-#Define Cost and Optimizer
-y_ = tf.placeholder(tf.float32, [None, 10]) #Placeholder for y' (the one-hot label vectors)
+y_hat = tf.matmul(x,W) + b #This is the Neural Network: y_hat = Wx + b
 
-cross_entropy = tf.reduce_mean(-tf.reduce_sum(y_ * tf.log(y), reduction_indices=[1])) #Cross Entropy Function
-# cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y, y_)) #This one is numerically stable
-train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy) #Preform gradient descent on the cross_entropy
+#Session
+sess = tf.InteractiveSession() #Create Session
+sess.run(tf.global_variables_initializer()) #Init Variables
 
-#Init Execution
-init = tf.global_variables_initializer() #Init variables
-sess = tf.Session() #Create new TF session
-sess.run(init) #Run session with initialized variables
+#Training Model
+y = tf.placeholder(tf.float32, shape=[None, num_classes]) #nx10 Matrix (One-Hot Vector, Label Data)
+cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_hat, y)) #Loss Function (cross_entropy(y_hat,y))
+train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy) #Performs Gradient Descent on loss function
 
-#Run Training
-for i in range(1000):
-    batch_xs, batch_ys = mnist.train.next_batch(100)
-    sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+for i in range(1000): #Run train step repeatedly
+    batch = mnist.train.next_batch(300) #Get a batch of training data
+    train_step.run(feed_dict={x: batch[0], y: batch[1]}) #Run training step on that batch
 
 #Evaluation
-correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1)) #Creates a list of booleans that represent which ones it got right.
-accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) #Averages correct predictions
+correct_prediction = tf.equal(tf.argmax(y_hat,1), tf.argmax(y,1)) #Returns whether model made correct prediction (List of booleans)
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32)) #Average of correct prediction (%Accuracy)
 
-print(sess.run(accuracy, feed_dict={x: mnist.test.images, y_: mnist.test.labels})) #Print Results
+print("Accuracy:", '{0:.2%}'.format(accuracy.eval(feed_dict={x: mnist.test.images, y: mnist.test.labels}))) #Print Accuracy
