@@ -1,5 +1,10 @@
 '''
-Following through the MNIST beginner tutorial from TensorFlow's website.
+One Layer Neural Network Digit Classifier (0-9)
+
+Layer order:
+Input --> Fully-Connected Layer --> Output
+
+@author: Ozaner Hansha
 '''
 #Import Libraries
 import tensorflow as tf
