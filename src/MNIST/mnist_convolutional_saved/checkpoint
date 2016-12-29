@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\Weegee 64\\Source Code\\workspace\\NeuralNetworks\\src\\MNIST\\mnist_convolutional_saved\\conv_mnist.chk"
+all_model_checkpoint_paths: "C:\\Users\\Weegee 64\\Source Code\\workspace\\NeuralNetworks\\src\\MNIST\\mnist_convolutional_saved\\conv_mnist.chk"

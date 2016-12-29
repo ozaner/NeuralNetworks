@@ -1,5 +1,7 @@
 '''
-One Layer Neural Network Digit Classifier (0-9)
+One Layer Neural Network Handwritten Digit Classifier (0-9)
+Trained and tested using MNIST data set
+Made using TensorFlow
 
 Layer order:
 Input --> Fully-Connected Layer --> Output
@@ -22,7 +24,8 @@ x = tf.placeholder(tf.float32, shape=[None, img_dim_flat]) #nx784 Matrix (Input)
 W = tf.Variable(tf.zeros([img_dim_flat,num_classes])) #784x10 Matrix (Weights)
 b = tf.Variable(tf.zeros([num_classes])) #10 long Vector (Biases)
 
-y_hat = tf.matmul(x,W) + b #This is the Neural Network: y_hat = Wx + b
+y_noSoftmax = tf.matmul(x,W) + b 
+y_hat = tf.nn.softmax(y_noSoftmax) #This is the Neural Network in one line: y_hat = softmax(Wx + b)
 
 #Session
 sess = tf.InteractiveSession() #Create Session
@@ -30,7 +33,9 @@ sess.run(tf.global_variables_initializer()) #Init Variables
 
 #Training Model
 y = tf.placeholder(tf.float32, shape=[None, num_classes]) #nx10 Matrix (One-Hot Vector, Label Data)
-cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_hat, y)) #Loss Function (cross_entropy(y_hat,y))
+'''y_noSoftmax is used for cross_entropy instead of y_hat because the softmax_cross_entropy function does 
+softmax internally to keep the function numerically stable '''
+cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_noSoftmax, y)) #Loss Function (cross_entropy(y_hat,y))
 train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy) #Performs Gradient Descent on loss function
 
 for i in range(1000): #Run train step repeatedly
