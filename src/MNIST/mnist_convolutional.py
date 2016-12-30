@@ -100,8 +100,9 @@ with tf.name_scope('FC_Layer_1'):
     fc1_relu = tf.nn.relu(fc1,'ReLu') #FC Layer 1 (ReLu)
     '''Dropout has a certain probability of drops a neural connection.
     Is used while training to prevent over fitting'''
-    keep_prob = tf.placeholder(tf.float32,name = 'Keep_Probability') #Defined during training via feed_dict
-    fc1_drop = tf.nn.dropout(fc1_relu, keep_prob,name='Dropout') #FC Layer 1 (Dropout)
+    with tf.name_scope('Dropout'):
+        keep_prob = tf.placeholder(tf.float32,) #Defined during training via feed_dict
+        fc1_drop = tf.nn.dropout(fc1_relu, keep_prob,) #FC Layer 1 (Dropout)
 
 #Fully Connected Layer 2 (turns features into evidence for 10 classes)
 fc2 = fullycon_layer(fc1_drop, channels[4], channels[5],name='FC_Layer_2')
@@ -129,21 +130,27 @@ with tf.name_scope('Validation'):
         correct_prediction = tf.equal(tf.argmax(fc2,1), tf.argmax(y,1),name='Correct_Pred.') #List of booleans (correct or not)
     with tf.name_scope('Mean_Accuracy'):
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32),name='Mean_Accuracy') #Average of above list
-
+    
+    
 #Create/Initialize Session
 sess = tf.InteractiveSession() #Create Session
 sess.run(tf.global_variables_initializer()) #Init Variables
 
-#Summery Writer
+#Summary
 writer = tf.summary.FileWriter(save_path + '\logs', sess.graph)
+tf.summary.scalar('Accuracy',accuracy)
+tf.summary.scalar('Cross_Entropy',cross_entropy)
+tf.summary.scalar('Keep_Probability',keep_prob)
 
 #Training (20,000 batches of 50)
-for i in range(101):
+summary_op = tf.summary.merge_all()
+for i in range(20001):
     batch = mnist.train.next_batch(50)
     if i%100 == 0:
         train_accuracy = accuracy.eval(feed_dict={x:batch[0], y: batch[1], keep_prob: 1.0})
         print("Train Accuracy @Step %d:"%(i), '{0:.1%}'.format(train_accuracy))
-    train_step.run(feed_dict={x: batch[0], y: batch[1], keep_prob: 0.5})
+    _, summary = sess.run([train_step,summary_op], feed_dict={x: batch[0], y: batch[1], keep_prob: 0.5})
+    writer.add_summary(summary, i)
 
 #Save Model (the weights and biases
 saver = tf.train.Saver()
