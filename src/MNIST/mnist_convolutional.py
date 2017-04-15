@@ -155,8 +155,8 @@ sess.run(tf.global_variables_initializer()) #Init Variables
 #     writer.add_summary(summary, i)
 # end = time.time() #End Timer
 # print("Elapsed Training Time:", '{0:.3}'.format(end - start), "Seconds")
-#    
-# #Save Model (the weights and biases
+    
+# #Save Model (the weights and biases)
 # saver = tf.train.Saver()
 # saver.save(sess, save_path + 'mnistNN.ckpt')
 
