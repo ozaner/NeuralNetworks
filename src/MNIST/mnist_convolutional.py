@@ -11,13 +11,14 @@ Fully Connected Layer 1 --> Fully Connected Layer 2 --> Output
 '''
 #Import Libraries
 import tensorflow as tf
+import time
 
 #Import Training, Validation & Testing Data
 from tensorflow.examples.tutorials.mnist import input_data
 mnist = input_data.read_data_sets("MNIST_data/", one_hot=True)
 
 #Save path for network tensors.
-save_path = 'C:\\Users\Weegee 64\Source Code\workspace\\NeuralNetworks\src\MNIST\mnist_convolutional_saved'
+save_path = 'C:\\Users\Weegee 64\Source Code\workspace\\NeuralNetworks\src\MNIST\save\\'
 
 #Filter Constants
 filter_size = 5 #5x5 filter
@@ -120,7 +121,7 @@ with tf.name_scope('Training'):
     '''fc2 is used for cross_entropy instead of y_hat because the softmax_cross_entropy function does 
     softmax internally to keep the function numerically stable'''
     with tf.name_scope('Cost_Function'):
-        cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(fc2, y,name='Cost_Function')) #Cost Function
+        cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=fc2, labels=y,name='Cost_Function')) #Cost Function
     with tf.name_scope('Optimizer'):
         train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy,name='Optimizer') #Training step (optimizer)
 
@@ -130,38 +131,44 @@ with tf.name_scope('Validation'):
         correct_prediction = tf.equal(tf.argmax(fc2,1), tf.argmax(y,1),name='Correct_Pred.') #List of booleans (correct or not)
     with tf.name_scope('Mean_Accuracy'):
         accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32),name='Mean_Accuracy') #Average of above list
-    
-    
+
+
 #Create/Initialize Session
 sess = tf.InteractiveSession() #Create Session
 sess.run(tf.global_variables_initializer()) #Init Variables
 
-#Summary
-writer = tf.summary.FileWriter(save_path + '\logs', sess.graph)
-tf.summary.scalar('Accuracy',accuracy)
-tf.summary.scalar('Cross_Entropy',cross_entropy)
-tf.summary.scalar('Keep_Probability',keep_prob)
-
-#Training (20,000 batches of 50)
-summary_op = tf.summary.merge_all()
-for i in range(20001):
-    batch = mnist.train.next_batch(50)
-    if i%100 == 0:
-        train_accuracy = accuracy.eval(feed_dict={x:batch[0], y: batch[1], keep_prob: 1.0})
-        print("Train Accuracy @Step %d:"%(i), '{0:.1%}'.format(train_accuracy))
-    _, summary = sess.run([train_step,summary_op], feed_dict={x: batch[0], y: batch[1], keep_prob: 0.5})
-    writer.add_summary(summary, i)
-
-#Save Model (the weights and biases
-saver = tf.train.Saver()
-saver.save(sess, save_path + '\conv_mnist.chk')
-
-# #Load Model
+# #Summary
+# writer = tf.summary.FileWriter(save_path + '\logs', sess.graph)
+# tf.summary.scalar('Accuracy',accuracy)
+# tf.summary.scalar('Cross_Entropy',cross_entropy)
+# tf.summary.scalar('Keep_Probability',keep_prob)
+#    
+# #Training (20,000 batches of 50)
+# summary_op = tf.summary.merge_all()
+# start = time.time() #Start Timer
+# for i in range(20000):
+#     batch = mnist.train.next_batch(50)
+#     if i%100 == 0:
+#         train_accuracy = accuracy.eval(feed_dict={x:batch[0], y: batch[1], keep_prob: 1.0})
+#         print("Train Accuracy @Step %d:"%(i), '{0:.1%}'.format(train_accuracy))
+#     _, summary = sess.run([train_step,summary_op], feed_dict={x: batch[0], y: batch[1], keep_prob: 0.5})
+#     writer.add_summary(summary, i)
+# end = time.time() #End Timer
+# print("Elapsed Training Time:", '{0:.3}'.format(end - start), "Seconds")
+#    
+# #Save Model (the weights and biases
 # saver = tf.train.Saver()
-# saver.restore(sess, save_path + '\conv_mnist.chk')
+# saver.save(sess, save_path + 'mnistNN.ckpt')
+
+#Load Model
+saver = tf.train.Saver()
+saver.restore(sess, save_path + 'mnistNN.ckpt')
 
 #Accuracy Check (10 batches of 50)
 for i in range(10):
     testSet = mnist.test.next_batch(50)
     train_accuracy = accuracy.eval(feed_dict={ x: testSet[0], y: testSet[1], keep_prob: 1.0})
     print("Test Accuracy @Step %d:"%(i), '{0:.1%}'.format(train_accuracy))
+
+#Export Graph
+tf.train.write_graph(sess.graph_def, save_path, 'mnistNN.pb')
