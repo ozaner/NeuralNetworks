@@ -38,7 +38,7 @@ with tf.name_scope('Training'):
     y = tf.placeholder(tf.float32, shape=[None, num_classes],name='y_Labeled') #nx10 Matrix (One-Hot Vector, Label Data)
     '''y_noSoftmax is used for cross_entropy instead of y_hat because the softmax_cross_entropy function does 
     softmax internally to keep the function numerically stable '''
-    cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_noSoftmax, y),name='Loss_Function') #Loss Function (cross_entropy(y_hat,y))
+    cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits = y_noSoftmax, labels = y),name='Loss_Function') #Loss Function (cross_entropy(y_hat,y))
     train_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy,name='Train_Step') #Performs Gradient Descent on loss function
 
 for i in range(1000): #Run train step repeatedly
