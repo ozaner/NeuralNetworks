@@ -18,8 +18,10 @@ string_points = file_object.read().split('\n')
 string_points.pop(-1)
 random.shuffle(string_points) #Randomize (avoid bias)
 
+num_input_features = 30
+
 #Initialize dataset class arrays
-point_array = np.empty((0,10))
+point_array = np.empty((0,num_input_features))
 y_labels = np.empty((0,2))
 
 #Trim data points, format as np.arrays, add to class arrays (Benign or Malignant)
@@ -29,7 +31,7 @@ for point in string_points:
         y_labels = np.append(y_labels, [[0,1]], axis=0)
     else: #if benign (can only be labeled 'B' or 'M')
         y_labels = np.append(y_labels, [[1,0]], axis=0)
-    point = point[2:12] #trim for only the 10 important features
+    point = point[2:] #trim for only the 10 important features
     temp = np.array(point) #convert to numpy array
     temp = temp.astype(float) #cast as float array
     point_array = np.append(point_array, [temp], axis=0)
@@ -41,9 +43,6 @@ experience_matrix = point_array[0:400]
 experience_matrix_y = y_labels[0:400]
 test_matrix = point_array[400:]
 test_matrix_y = y_labels[400:]
-
-#Training variables
-num_input_features = 10
 
 with tf.name_scope('Hidden_Layer'):
     x = tf.placeholder(tf.float32, shape=[None, num_input_features]) #nx10 Matrix (Input)
