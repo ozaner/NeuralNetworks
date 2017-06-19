@@ -17,4 +17,4 @@
 *.RTF	 diff=astextplain
 
 #Fix Github Language Detection
-src/MNIST/save/* linguist-vendored
+*.pb linguist-vendored
