@@ -1,16 +1,24 @@
 # Neural Networks
-### A Testspace for Neural Networks in Python
+### A Testspace for Neural Networks and Machine Learning Projects in Python
 
 ## Projects I've made:
-- Models simple monotonic functions (Single-Layer Perceptron Network) (Doesn't use TensorFlow) [(Src)](src/pureNN/NeuralNetwork.py)
-- Classifies handwriten digits (0-9) (Single-Layer Perceptron Network) [(Src)](src/MNIST/mnist_softmax.py)
-- Classifies handwriten digits (0-9) (Deep Convolutional Network) [(Src)](src/MNIST/mnist_convolutional.py)
-  - [Simplified Graph](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
-- Classifies Breast Cancer tumors as malignant or benign. [(Src)](src/test/bcDiagnosis.py)
+- Can model basic monotonic functions [(Src)](src/test/firstNeuralNetwork.py)
+  - Single-Layer Perceptron Network
+  - Implemented from scratch as a proof of concept of neural networks.
+- Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_softmax.py)
+  - Single-Layer Perceptron Network
+  - Uses the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+- Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_convolutional.py)
+  - Deep Convolutional Network
+  - Uses the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+  - [Simplified Graph of the Network](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
+  - I implemented this network into [an android app](https://github.com/ozanerhansha/DigitClassifier)
+- Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
+  - Single-Layer Perceptron Network
 
 Coded in **Python 3.5** with:
-- Google's [*TensorFlow*] (https://www.tensorflow.org/)
-- [*NumPy*] (http://www.numpy.org/)
+- Google's [*TensorFlow*](https://www.tensorflow.org/)
+- [*NumPy*](http://www.numpy.org/)
 
 ## Useful References:
 - [Deep Learning](http://www.deeplearningbook.org) by Ian Goodfellow, et al.
