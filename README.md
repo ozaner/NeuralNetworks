@@ -7,14 +7,15 @@
   - Implemented from scratch as a proof of concept of neural networks.
 - Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_softmax.py)
   - Single-Layer Perceptron Network
-  - Uses the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+  - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
 - Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_convolutional.py)
   - Deep Convolutional Network
-  - Uses the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+  - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
   - [Simplified Graph of the Network](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
   - I implemented this network into [an android app](https://github.com/ozanerhansha/DigitClassifier)
 - Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
   - Single-Layer Perceptron Network
+  - Trained on the [Breast Cancer Wisconsin Data Set](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)) 
 
 Coded in **Python 3.5** with:
 - Google's [*TensorFlow*](https://www.tensorflow.org/)
