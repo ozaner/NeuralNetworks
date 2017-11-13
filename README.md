@@ -5,8 +5,7 @@
 - Models simple monotonic functions (Single-Layer Perceptron Network) (Doesn't use TensorFlow) [(Src)](src/pureNN/NeuralNetwork.py)
 - Classifies handwriten digits (0-9) (Single-Layer Perceptron Network) [(Src)](src/MNIST/mnist_softmax.py)
 - Classifies handwriten digits (0-9) (Deep Convolutional Network) [(Src)](src/MNIST/mnist_convolutional.py)
-  - Simplified Graph:
-  - ![NN](/convNet.PNG?raw=true "Convolutional NN")
+  - [Simplified Graph](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
 - Classifies Breast Cancer tumors as malignant or benign. [(Src)](src/test/bcDiagnosis.py)
 
 Coded in **Python 3.5** with:
