@@ -1,7 +1,7 @@
 # Neural Networks
 ### A Testspace for Neural Networks and Machine Learning Projects in Python
 
-## Projects I've made:
+## Projects:
 - Can model basic monotonic functions [(Src)](src/test/firstNeuralNetwork.py)
   - Single-Layer Perceptron Network
   - Implemented from scratch as a proof of concept of neural networks.
