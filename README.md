@@ -27,7 +27,7 @@ Coded in **Python 3.5** with:
   - Also includes a review of prerequisite mathematics (Linear Algebra, Information Theory, etc).
 - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com) by Micheal Nielson
   - Introduces and constructs neural networks from first principles.
-- [Essence of Linear Algebra](https://www.youtube.com/watch?v=kjBOesZCoqc&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) by 3Blue1Brown
+- [Essence of Linear Algebra](https://www.youtube.com/watch?v=kjBOesZCoqc&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) by Grant Sanderson
   - Video series visually explaining Linear Algebra.
 - [Gradient Descent Derivation](http://mccormickml.com/2014/03/04/gradient-descent-derivation/) by Chris McCormick
   - Explains and derives graident descent using calculus.
