@@ -5,10 +5,10 @@
 - Can model basic monotonic functions [(Src)](src/test/firstNeuralNetwork.py)
   - Single-Layer Perceptron Network
   - Implemented from scratch as a proof of concept of neural networks.
-- Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_softmax.py)
+- Classifies handwriten digits (0-9) [(Src)](src/MNIST/fc/mnist_fc.py)
   - Single-Layer Perceptron Network
   - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
-- Classifies handwriten digits (0-9) [(Src)](src/MNIST/mnist_convolutional.py)
+- Classifies handwriten digits (0-9) [(Src)](src/MNIST/conv/mnist_convolutional.py)
   - Deep Convolutional Network
   - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
   - [Simplified Graph of the Network](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
