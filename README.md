@@ -26,7 +26,7 @@ Coded in **Python 3.5** with:
 - [Deep Learning](http://www.deeplearningbook.org) by Ian Goodfellow, et al.
   - Comprehensive description of deep learning.
   - Also includes a review of prerequisite mathematics (Linear Algebra, Information Theory, etc).
-- [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com) by Micheal Nielson
+- [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com) by Michael Nielson
   - Introduces and constructs neural networks from first principles.
 - [Essence of Linear Algebra](https://www.youtube.com/watch?v=kjBOesZCoqc&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) by Grant Sanderson
   - Video series visually explaining Linear Algebra.
