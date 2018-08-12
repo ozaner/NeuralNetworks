@@ -16,7 +16,7 @@
 - Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
   - Single-Layer Perceptron Network
   - Trained on the [Breast Cancer Wisconsin Data Set](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)) 
-  - Full writeup can be found [here](https://ozanerhansha.github.io/2018/01/15/breast-cancer-classification/)
+  - Full writeup can be found [here](https://ozanerhansha.github.io/breast-cancer-classification/)
 
 Coded in **Python 3.5** with:
 - Google's [*TensorFlow*](https://www.tensorflow.org/)
