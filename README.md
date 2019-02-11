@@ -2,21 +2,28 @@
 ### A Testspace for Neural Networks and Machine Learning Projects in Python
 
 ## Projects:
-- Can model basic monotonic functions [(Src)](src/test/firstNeuralNetwork.py)
+- Can Play Atari Pong
+  - Policy Gradient Network
+  - Pong game from OpenAI's [Gym](https://gym.openai.com/) package
+  - Full writeup can be found [here](https://ozanerhansha.github.io/reinforcement-learning-pong/)
+- Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
   - Single-Layer Perceptron Network
-  - Implemented from scratch as a proof of concept of neural networks.
-- Classifies handwriten digits (0-9) [(Src)](src/MNIST/fc/mnist_fc.py)
-  - Single-Layer Perceptron Network
-  - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+  - Trained on the [Breast Cancer Wisconsin Data Set](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)) 
+  - Full writeup can be found [here](https://ozanerhansha.github.io/breast-cancer-classification/)
 - Classifies handwriten digits (0-9) [(Src)](src/MNIST/conv/mnist_convolutional.py)
   - Deep Convolutional Network
   - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
   - [Simplified Graph of the Network](https://raw.githubusercontent.com/ozanerhansha/NeuralNetworks/master/convNet.PNG)
   - I implemented this network into [an android app](https://github.com/ozanerhansha/DigitClassifier)
-- Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
+- Classifies handwriten digits (0-9) [(Src)](src/MNIST/fc/mnist_fc.py)
   - Single-Layer Perceptron Network
-  - Trained on the [Breast Cancer Wisconsin Data Set](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(original)) 
-  - Full writeup can be found [here](https://ozanerhansha.github.io/breast-cancer-classification/)
+  - Trained on the [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+- Can model basic monotonic functions [(Src)](src/test/firstNeuralNetwork.py)
+  - Single-Layer Perceptron Network
+  - Implemented from scratch as a proof of concept of neural networks.
+
+
+
 
 Coded in **Python 3.5** with:
 - Google's [*TensorFlow*](https://www.tensorflow.org/)
