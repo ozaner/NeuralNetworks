@@ -2,8 +2,7 @@
 ### A Testspace for Neural Networks and Machine Learning Projects in Python
 
 ## Projects:
-- Can Play Atari Pong
-  - Policy Gradient Network
+- A Pong playing AI using Policy Gradient Reinforcement Learning [(Src)](src/pongRL).
   - Pong game from OpenAI's [Gym](https://gym.openai.com/) package
   - Full writeup can be found [here](https://ozanerhansha.github.io/reinforcement-learning-pong/)
 - Classifies Breast Cancer tumors as malignant or benign [(Src)](src/test/bcDiagnosis.py)
