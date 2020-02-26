@@ -1,2 +1,2 @@
-model_checkpoint_path: "policy_network.ckpt"
-all_model_checkpoint_paths: "policy_network.ckpt"
+model_checkpoint_path: "C:/Users/Weegee 64/Google Drive/Workspace/NeuralNetworks/src/pongRL/checkpoints\\policy_network.ckpt"
+all_model_checkpoint_paths: "C:/Users/Weegee 64/Google Drive/Workspace/NeuralNetworks/src/pongRL/checkpoints\\policy_network.ckpt"

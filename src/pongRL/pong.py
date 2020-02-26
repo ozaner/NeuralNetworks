@@ -5,20 +5,23 @@ A Pong playing AI using Policy Gradient Reinforcement Learning.
 """
 import numpy as np
 import gym
+import time
 
 from policy_net import PolicyNet
 
 # Runtime Parameters
-render = True
+render = False
+slowdown = False
 load_checkpoint = True
 checkpoint_every_n_episodes = 10
+checkpoints_dir='C:/Users/Weegee 64/Google Drive/Workspace/NeuralNetworks/src/pongRL/checkpoints'
 
 # Hyperparameters
 hidden_layer_size = 200
 learning_rate = 0.0005
 batch_size_episodes = 1
 discount_factor = 0.99
-deterministic = False # always vs. tend to pick highest probability
+deterministic = True # always vs. tend to pick highest probability
 
 # Map gym's values to policy network's values
 MOVE_UP = 2 #Up action in pong gym
@@ -53,10 +56,10 @@ def discount_rewards(rewards, discount_factor):
         discounted_rewards[t] = total_discounted_reward
     return discounted_rewards
 
-env = gym.make('Pong-v0')
+env = gym.make('Pong-v4')
 
 pongNet = PolicyNet(
-    hidden_layer_size, learning_rate, checkpoints_dir='C:/Users/Weegee 64/Google Drive/Workspace/NeuralNetworks/src/pongRL/checkpoints')
+    hidden_layer_size, learning_rate, checkpoints_dir)
 if load_checkpoint:
     pongNet.load_checkpoint()
 
@@ -84,6 +87,9 @@ while True:
         if render:
             env.render()
 
+        if slowdown:
+            time.sleep(0.01667)
+
         observation_delta = observation - last_observation
         last_observation = observation
         up_probability = pongNet.forward_pass(observation_delta)[0]
@@ -107,15 +113,16 @@ while True:
         tup = (observation_delta, action_dict[action], reward)
         batch_feature_vector.append(tup)
 
-        if reward == -1:
-            print("Round {}: {} time steps; lost...".format(round_num, n_steps))
-        elif reward == +1:
-            print("Round {}: {} time steps; won!".format(round_num, n_steps))
+        # if reward == -1:
+        #     print("Round {}: {} time steps; lost...".format(round_num, n_steps))
+        # elif reward == +1:
+        #     print("Round {}: {} time steps; won!".format(round_num, n_steps))
         if reward != 0:
             round_num += 1
             n_steps = 0
 
     print("Episode {} finished after {} rounds".format(episode_count, round_num))
+    pongNet.episodes = pongNet.episodes + 1
 
     # exponentially smoothed version of reward
     if smoothed_reward is None:
